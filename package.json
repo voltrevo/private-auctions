@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
-    "test": "mocha --import=tsx/esm 'test/**/*.test.ts'",
+    "test": "tsc --noEmit && mocha --import=tsx/esm 'test/**/*.test.ts'",
     "test:watch": "mocha --import=tsx/esm --watch 'test/**/*.test.ts'",
     "clean": "rm -rf dist"
   },
@@ -32,6 +32,7 @@
   "dependencies": {
     "emp-wasm-engine": "^0.5.4",
     "mpc-framework": "^0.3.0",
+    "mpc-framework-common": "^0.4.1",
     "summon-ts": "^0.6.2"
   }
 }
