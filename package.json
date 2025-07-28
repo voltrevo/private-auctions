@@ -28,5 +28,10 @@
     "mocha": "^10.7.0",
     "tsx": "^4.16.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "emp-wasm-engine": "^0.5.4",
+    "mpc-framework": "^0.3.0",
+    "summon-ts": "^0.6.2"
   }
 }

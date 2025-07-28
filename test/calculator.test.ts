@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { strict as assert } from 'assert';
-import { Calculator } from '../src/calculator.js';
+import { Calculator } from '../src/util/calculator.js';
 
 describe('Calculator', () => {
   let calculator: Calculator;
