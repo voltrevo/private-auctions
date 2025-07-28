@@ -25,24 +25,57 @@ describe('compare2Bids', () => {
     }
   });
 
-  it('5 < 10', async () => {
-    const { circuit } = compileCircuit();
+  const testCases = [
+    {
+      name: '5 v 10 => party1 wins',
+      party0Input: { party0Bid: 5, party0TieBreaker: false },
+      party1Input: { party1Bid: 10, party1TieBreaker: false },
+      output: { party1Wins: true },
+    },
+    {
+      name: '3 v 1 => party1 loses',
+      party0Input: { party0Bid: 3, party0TieBreaker: false },
+      party1Input: { party1Bid: 1, party1TieBreaker: false },
+      output: { party1Wins: false },
+    },
+    {
+      name: 'equal and no tiebreakers => party1 wins',
+      party0Input: { party0Bid: 17, party0TieBreaker: false },
+      party1Input: { party1Bid: 17, party1TieBreaker: false },
+      output: { party1Wins: true },
+    },
+    {
+      name: 'equal and both tiebreakers => party1 wins',
+      party0Input: { party0Bid: 17, party0TieBreaker: false },
+      party1Input: { party1Bid: 17, party1TieBreaker: false },
+      output: { party1Wins: true },
+    },
+    {
+      name: 'equal and one tiebreaker => party1 loses',
+      party0Input: { party0Bid: 17, party0TieBreaker: true },
+      party1Input: { party1Bid: 17, party1TieBreaker: false },
+      output: { party1Wins: false },
+    },
+    {
+      name: 'equal and one tiebreaker (2) => party1 loses',
+      party0Input: { party0Bid: 17, party0TieBreaker: false },
+      party1Input: { party1Bid: 17, party1TieBreaker: true },
+      output: { party1Wins: false },
+    },
+  ];
 
-    const protocol = new mpcf.Protocol(circuit, new EmpWasmEngine());
+  for (const { name, party0Input, party1Input, output } of testCases) {
+    it(name, async () => {
+      const { circuit } = compileCircuit();
+      const protocol = new mpcf.Protocol(circuit, new EmpWasmEngine());
+      const aqs = new AsyncQueueStore<Uint8Array>();
 
-    const aqs = new AsyncQueueStore<Uint8Array>();
+      const results = await Promise.all([
+        runParty(protocol, 'party0', party0Input, aqs),
+        runParty(protocol, 'party1', party1Input, aqs),
+      ]);
 
-    const party0Input = { party0Bid: 5, party0TieBreaker: false };
-    const party1Input = { party1Bid: 10, party1TieBreaker: false };
-
-    const results = await Promise.all([
-      runParty(protocol, 'party0', party0Input, aqs),
-      runParty(protocol, 'party1', party1Input, aqs),
-    ]);
-
-    assert.deepStrictEqual(results, [
-      { party1Wins: true },
-      { party1Wins: true },
-    ]);
-  });
+      assert.deepStrictEqual(results, [output, output]);
+    });
+  }
 });
