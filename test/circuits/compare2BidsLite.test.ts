@@ -9,12 +9,12 @@ import { runParty } from '../helpers/runParty';
 import { AsyncQueueStore } from 'mpc-framework-common';
 
 const compileCircuit = once(() => summon.compile({
-  path: `${getProjectRoot()}/src/circuits/compare2Bids.ts`,
+  path: `${getProjectRoot()}/src/circuits/compare2BidsLite.ts`,
   boolifyWidth: 32,
   readFile: (filePath) => fs.readFileSync(filePath, 'utf-8'),
 }));
 
-describe('compare2Bids', () => {
+describe('compare2BidsLite', () => {
   it('compiles', async () => {
     await summon.init();
 
