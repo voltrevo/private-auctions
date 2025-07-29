@@ -11,7 +11,7 @@ if [[ -f fetch_done && fetch_done -nt "${BASH_SOURCE[0]}" ]]; then
     exit 0
 fi
 
-SUMMON_LIB_VER=c24b5f32ccb8d8ffe77fb1465425a0575012b4b7
+SUMMON_LIB_VER=fe3b4b5be99e8898bc8ecce2b196d675fff5e37d
 GH_PSE="https://raw.githubusercontent.com/privacy-scaling-explorations"
 SUMMON_LIB_BASE="$GH_PSE/summon-lib/$SUMMON_LIB_VER"
 
