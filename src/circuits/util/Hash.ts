@@ -21,20 +21,20 @@ export class Hash {
     return new Hash(data);
   }
 
-  static calc(...data: HashFlexInput[]) {
+  static calc(inputs: HashFlexInput[]) {
     function toBits(data: HashFlexInput): boolean[] {
       switch (typeof data) {
         case 'boolean':
           return [data];
-        
+
         case 'number':
           return numberTo32Bits(data);
-        
+
         default: {
           let res: boolean[] = [];
 
           for (const item of data) {
-            res.push(...toBits(data))
+            res.push(...toBits(item))
           }
 
           return res;
@@ -42,7 +42,7 @@ export class Hash {
       }
     }
 
-    return new Hash(sha256((toBits(data))));
+    return new Hash(sha256(toBits(inputs)));
   }
 
   static eq(a: Hash, b: Hash) {

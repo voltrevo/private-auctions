@@ -19,8 +19,8 @@ export default (io: Summon.IO) => {
   const party0Hash = Hash.input(io, 'party1', 'party0Hash');
   const party1Hash = Hash.input(io, 'party0', 'party1Hash');
 
-  const party0HashCalc = Hash.calc(party0Salt.data, party0Bid);
-  const party1HashCalc = Hash.calc(party1Salt.data, party1Bid);
+  const party0HashCalc = Hash.calc([party0Salt.data, party0Bid]);
+  const party1HashCalc = Hash.calc([party1Salt.data, party1Bid]);
 
   const party0HashCheck = Hash.eq(party0HashCalc, party0Hash);
   const party1HashCheck = Hash.eq(party1HashCalc, party1Hash);
