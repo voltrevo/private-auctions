@@ -1,5 +1,3 @@
-// Note: Must be compiled with boolifyWidth:32.
-
 import { compare2Bids } from "./util/compare2Bids.ts";
 
 export default (io: Summon.IO) => {
